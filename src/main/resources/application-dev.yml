@@ -1,0 +1,7 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      authentication-database: false
+      uri: mongodb://127.0.0.1:27017/test

@@ -12,11 +12,12 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Resource;
 import java.lang.reflect.ParameterizedType;
+import java.util.Date;
 import java.util.List;
 
 public class MongoBasicRepositoryImpl<T extends MongoBasicEntity> implements MongoBasicRepository<T> {
     @Resource
-    private MongoTemplate mongoTemplate;
+    protected MongoTemplate mongoTemplate;
     @Autowired
     private SnowFlake snowFlake;
 
@@ -29,12 +30,16 @@ public class MongoBasicRepositoryImpl<T extends MongoBasicEntity> implements Mon
     @Override
     public T insert(T bean) {
         bean.setId(snowFlake.nextId());
+        bean.setCreatedAt(new Date().getTime());
         return mongoTemplate.insert(bean);
     }
 
     @Override
     public List<T> batchInsert(List<T> beanList) {
-        beanList.forEach(item -> item.setId(snowFlake.nextId()));
+        beanList.forEach(item -> {
+            item.setId(snowFlake.nextId());
+            item.setCreatedAt(new Date().getTime());
+        });
         mongoTemplate.insertAll(beanList);
         return beanList;
     }

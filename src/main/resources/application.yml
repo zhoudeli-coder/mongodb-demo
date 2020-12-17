@@ -1,6 +1,8 @@
 spring:
   application:
     name: mongodb-demo
+  profiles:
+    active: dev
 server:
   port: 9001
 

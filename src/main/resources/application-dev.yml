@@ -5,3 +5,11 @@ spring:
     mongodb:
       authentication-database: false
       uri: mongodb://127.0.0.1:27017/test
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core: DEBUG

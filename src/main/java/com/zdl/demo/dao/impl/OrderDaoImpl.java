@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.ConvertOperators;
 import org.springframework.data.mongodb.core.aggregation.DateOperators;
+import org.springframework.data.mongodb.core.schema.JsonSchemaObject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +23,9 @@ public class OrderDaoImpl extends MongoBasicRepositoryImpl<Order> implements Ord
         DateOperators.DateToString toString = DateOperators.DateToString.dateOf(ConvertOperators.Convert.convertValueOf("created_at").to("date"))
                 .toString("%Y-%m-%d").withTimezone(DateOperators.Timezone.valueOf("Asia/Shanghai"));
         Aggregation aggregation = Aggregation.newAggregation(
-                Aggregation.project().and(toString).as("date_time"),
-                Aggregation.group("date_time").count().as("count")
+                Aggregation.project().and(toString).as("date_time")
+                        .and(ConvertOperators.Convert.convertValueOf("order_num").to(JsonSchemaObject.Type.DECIMAL_128).onErrorReturn(0).onNullReturn(0)).as("amount"),
+                Aggregation.group("date_time").sum("amount").as("count")
         );
         AggregationResults<BasicDBObject> list = mongoTemplate.aggregate(aggregation, "order", BasicDBObject.class);
         return list.getMappedResults();

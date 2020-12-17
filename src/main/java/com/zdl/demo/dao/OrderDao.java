@@ -11,4 +11,6 @@ import java.util.List;
 public interface OrderDao extends MongoBasicRepository<Order> {
 
     List<BasicDBObject> aggregation();
+
+    List<BasicDBObject> aggregation2();
 }

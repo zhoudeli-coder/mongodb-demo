@@ -53,4 +53,9 @@ public class DemoController {
     public List<BasicDBObject> aggregation(){
         return orderDao.aggregation();
     }
+
+    @GetMapping("/aggregation2")
+    public List<BasicDBObject> aggregation2(){
+        return orderDao.aggregation2();
+    }
 }

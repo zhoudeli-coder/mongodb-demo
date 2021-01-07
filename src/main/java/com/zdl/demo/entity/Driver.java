@@ -16,6 +16,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Data
 @NoArgsConstructor
 @Document(collection = "driver")
+@CompoundIndexes({
+        @CompoundIndex(name = "name_idx", def = "{'name': 1}")
+})
 public class Driver extends MongoBasicEntity {
     private static final long serialVersionUID = -2151089832520399018L;
 

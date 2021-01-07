@@ -2,7 +2,9 @@ package com.zdl.demo.controller;
 
 import com.google.common.collect.Lists;
 import com.mongodb.BasicDBObject;
+import com.zdl.demo.dao.CarDao;
 import com.zdl.demo.dao.OrderDao;
+import com.zdl.demo.entity.Car;
 import com.zdl.demo.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -19,12 +21,23 @@ public class DemoController {
 
     @Autowired
     private OrderDao orderDao;
+    @Autowired
+    private CarDao carDao;
 
     @PostMapping("/insert")
     public String insert(String orderNum){
         Order order = new Order();
         order.setOrderNum(orderNum);
         orderDao.insert(order);
+        return "成功";
+    }
+
+
+    @PostMapping("/car/insert")
+    public String insertCar(String orderNum){
+        Car car = new Car();
+        car.setLicenseNo("test");
+        carDao.insert(car);
         return "成功";
     }
 

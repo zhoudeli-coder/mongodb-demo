@@ -15,17 +15,16 @@ import org.springframework.data.mongodb.core.mapping.Field;
  */
 @Data
 @NoArgsConstructor
-@Document(collection = "order")
+@Document(collection = "car")
 @CompoundIndexes({
-        @CompoundIndex(name = "order_num_idx", def = "{'order_num': 1}")
+        @CompoundIndex(name = "license_no_idx", def = "{'license_no': 1}")
 })
-public class Order extends MongoBasicEntity {
-    private static final long serialVersionUID = 5035937904320562316L;
+public class Car extends MongoBasicEntity {
+    private static final long serialVersionUID = 382016627098620070L;
 
     /**
      * 订单编号
      */
-    @Field("order_num")
-    @Indexed(unique = true)
-    private String orderNum;
+    @Field("license_no")
+    private String licenseNo;
 }
